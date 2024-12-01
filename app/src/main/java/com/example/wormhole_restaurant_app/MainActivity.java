@@ -35,71 +35,73 @@ public class MainActivity extends AppCompatActivity {
         });
 //        superListView = findViewById(R.id.superListView);
 //        getSuperHeroes();
-        loginWithPost();
-        loginWithGet();
+        login();
+//        loginWithGet();
+//        getProdName();
     }
-    private void loginWithPost() {
-        User user = new User("felipe", "12345");
-        Call<User> call = RetrofitClient.getInstance().getMyApi().loginWithPost(user);
+    private void login() {
+        User user = new Client("rey@gmail.com", "teste", "client");
+        Call<User> call = RetrofitClient.getInstance().getMyApi().login(user);
+        Log.e("ERROR 3", call.toString());
 
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                User user1 = response.body();
+                User user1 = response.body(); //Erro aqui, não efetua o login???
 
                 TextView tvId = findViewById(R.id.tvIdPost);
                 TextView tvFullname = findViewById(R.id.tvFullnamePost);
 
-                if (user1.isSuccess()) {
+                if (user1.type == "success") {
                     tvId.setText("" + user1.getId());
-                    tvFullname.setText(user1.getFullname());
+                    tvFullname.setText(user1.getUserName());
                 } else {
                     //a API retorna uma mensagem de erro quando o login não for bem sucedido
                     //usei otvFullname para exibir a mensagem de erro
                     tvFullname.setText(user1.getMessage());
                 }
-
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
-                Log.e("TESTE", t.toString());
+                Log.e("ERROR", t.toString());
+                Log.e("ERROR 2", call.toString());
             }
         });
     }
-
-    private void loginWithGet() {
-
-        //só muda isto, o restante é igual
-        Call<User> call = RetrofitClient.getInstance().getMyApi().loginWithGet("felipe", "12345");
-
-        //a chamada é igual ao método loginWithPost, poderia ser substituida por um método
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                User user1 = response.body();
-
-                TextView tvId = findViewById(R.id.tvId);
-                TextView tvFullname = findViewById(R.id.tvFullname);
-
-                if (user1.isSuccess()) {
-                    tvId.setText("" + user1.getId());
-                    tvFullname.setText(user1.getFullname());
-                } else {
-                    tvFullname.setText(user1.getMessage());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
-                Log.e("TESTE", t.toString());
-            }
-        });
-
-    }
+//
+//    private void loginWithGet() {
+//
+//        //só muda isto, o restante é igual
+//        Call<User> call = RetrofitClient.getInstance().getMyApi().loginWithGet("felipe", "12345");
+//
+//        //a chamada é igual ao método loginWithPost, poderia ser substituida por um método
+//        call.enqueue(new Callback<User>() {
+//            @Override
+//            public void onResponse(Call<User> call, Response<User> response) {
+//                User user1 = response.body();
+//
+//                TextView tvId = findViewById(R.id.tvId);
+//                TextView tvFullname = findViewById(R.id.tvFullname);
+//
+//                if (user1.isSuccess()) {
+//                    tvId.setText("" + user1.getId());
+//                    tvFullname.setText(user1.getFullname());
+//                } else {
+//                    tvFullname.setText(user1.getMessage());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<User> call, Throwable t) {
+//                Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
+//                Log.e("TESTE", t.toString());
+//            }
+//        });
+//
+//    }
 
 //    private void getSuperHeroes() {
 //        Call<List<Hero>> call = RetrofitClient.getInstance().getMyApi().getSuperHeroes();
@@ -118,6 +120,28 @@ public class MainActivity extends AppCompatActivity {
 //
 //            @Override
 //            public void onFailure(Call<List<Hero>> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "Ocorreu um erro. " + t.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
+//    private void getProdName() {
+//        Call<List<Product>> call = RetrofitClient.getInstance().getMyApi().getProdName();
+//        call.enqueue(new Callback<List<Product>>() {
+//            @Override
+//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+//                List<Product> prodList = response.body();
+//                String[] p = new String[ prodList.size() ];
+//                for (int i = 0; i < p.length; i++) {
+//                    p[i] = prodList.get(i).getName() + " " + prodList.get(i).getId();
+//                }
+//                ArrayAdapter<String> heroesAdapter =
+//                        new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, p);
+//                superListView.setAdapter(heroesAdapter);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Product>> call, Throwable t) {
 //                Toast.makeText(MainActivity.this, "Ocorreu um erro. " + t.toString(), Toast.LENGTH_SHORT).show();
 //            }
 //        });

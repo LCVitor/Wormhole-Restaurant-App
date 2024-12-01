@@ -11,16 +11,21 @@ import retrofit2.http.POST;
 
 public interface Api {
 //    String BASE_URL = "https://simplifiedcoding.net/demos/";
+    String BASE_URL = "http://10.0.2.2:8080/api/";
+//    http://localhost:8080/api/users/login
 //    @GET("marvel")
 //    Call<List<Hero>> getSuperHeroes();
-    String BASE_URL = "http://10.0.2.2/android/";
-
-    //login com GET enviando os dados no header
-    @GET("login_test.php")
-    Call<User> loginWithGet(@Header("username") String username, @Header("password") String password);
+//    @GET("products")
+//    Call<List<Product>> getProdName();
+//    //login com GET enviando os dados no header
+//    @GET("products")
+//    Call<User> loginWithGet(@Header("username") String username, @Header("password") String password);
 
     //login com POST
-    @POST("login_test.php")
-    Call<User> loginWithPost(@Body User user);
+//    @POST("login_test.php")
+//    Call<User> loginWithPost(@Body User user);
+    @POST("users/login")
+    Call<User> login(@Body User user);
+
 }
 

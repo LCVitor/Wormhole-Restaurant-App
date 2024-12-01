@@ -2,36 +2,36 @@ package com.example.wormhole_restaurant_app;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
-    //A classe user é uma POJO super simples, pois somente informamos
-    //os atributos que iremos enviar e receber da nossa API
-    @SerializedName("user_id")
-    private int id;
-    private String username;
-    private String password;
-    private String fullname;
+abstract public class User extends Response{
+    @SerializedName("id") protected int id;
+    @SerializedName("name") protected String name;
+    @SerializedName("password") protected String password;
+    @SerializedName("email") protected String email;
+    @SerializedName("img") protected String img;
+    @SerializedName("status") protected String status;
+    @SerializedName("userType") protected String userType;
+    @SerializedName("token") protected String token;
+    protected String entity;
 
-    //estes atributos podem ser definidos em uma outra classe (Response) e a classe User herdaria dela
-    //para para fins didáticos, inseri os atributos da resposta aqui para facilitar
-    private boolean success;
-    private String message;
 
-    public User(int id, String username, String password, String fullname, boolean success, String message) {
+    public User(int id, String name, String password, String email, String type, String userType) {
         this.id = id;
-        this.username = username;
+        this.name = name;
         this.password = password;
-        this.fullname = fullname;
-        this.success = success;
-        this.message = message;
+        this.email = email;
+        this.status = "active";
+        this.type = type;
+        this.userType = userType;
     }
 
-    public User(String username, String password) {
-        this.username = username;
+    public User(String email, String password, String userType) {
+        this.email = email;
         this.password = password;
+        this.userType = userType;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return name;
     }
 
     public String getPassword() {
@@ -40,14 +40,6 @@ public class User {
 
     public int getId() {
         return id;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public boolean isSuccess() {
-        return success;
     }
 
     public String getMessage() {
