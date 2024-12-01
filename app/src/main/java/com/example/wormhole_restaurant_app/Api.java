@@ -15,8 +15,8 @@ public interface Api {
 //    http://localhost:8080/api/users/login
 //    @GET("marvel")
 //    Call<List<Hero>> getSuperHeroes();
-//    @GET("products")
-//    Call<List<Product>> getProdName();
+    @GET("products")
+    Call<List<Product>> getProdName();
 //    //login com GET enviando os dados no header
 //    @GET("products")
 //    Call<User> loginWithGet(@Header("username") String username, @Header("password") String password);

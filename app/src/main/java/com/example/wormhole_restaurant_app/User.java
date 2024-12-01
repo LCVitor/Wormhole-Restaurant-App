@@ -45,4 +45,6 @@ abstract public class User extends Response{
     public String getMessage() {
         return message;
     }
+
+    public String getToken() { return token; }
 }
