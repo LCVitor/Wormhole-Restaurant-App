@@ -2,7 +2,7 @@ package com.example.wormhole_restaurant_app;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Product extends Response{
+public class Product extends Login {
     @SerializedName("id") private int id;
     @SerializedName("name") private String name;
     @SerializedName("img") private String img;

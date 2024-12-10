@@ -25,7 +25,7 @@ public interface Api {
 //    @POST("login_test.php")
 //    Call<User> loginWithPost(@Body User user);
     @POST("users/login")
-    Call<User> login(@Body User user);
+    Call<Login> login(@Body User user);
 
 }
 

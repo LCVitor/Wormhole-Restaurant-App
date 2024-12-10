@@ -2,11 +2,20 @@ package com.example.wormhole_restaurant_app;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,5 +69,47 @@ public class Fragment2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_2, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView tvId = getView().findViewById(R.id.tvIdPost);
+        TextView tvFullname = getView().findViewById(R.id.tvFullnamePost);
+        login(tvId, tvFullname);
+    }
+
+    private void login(TextView id, TextView fullName) {
+        User user = new Client("rey@gmail.com", "teste", "client");
+        Call<Login> call = RetrofitClient.getInstance().getMyApi().login(user);
+        Log.e("ERROR 3", call.toString());
+
+        call.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                Login user1 = response.body();
+
+                TextView tvId = id;
+                TextView tvFullname = fullName;
+
+                if (user1.isSuccess().equals("success")) {
+                    tvId.setText("" + user1.getUser().getId());
+                    tvFullname.setText(user1.getUser().getUserName());
+                } else {
+                    //a API retorna uma mensagem de erro quando o login não for bem sucedido
+                    //usei otvFullname para exibir a mensagem de erro
+                    tvFullname.setText(user1.getMessage());
+                    Log.e("TESTE", "Entrei aqui!!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                Toast.makeText(getContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
+                Log.e("ERROR", t.toString());
+                Log.e("ERROR 2", call.toString());
+            }
+        });
     }
 }
