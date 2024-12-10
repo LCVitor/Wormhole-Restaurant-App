@@ -1,12 +1,11 @@
 package com.example.wormhole_restaurant_app;
 
 import java.util.List;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface Api {
@@ -25,7 +24,7 @@ public interface Api {
 //    @POST("login_test.php")
 //    Call<User> loginWithPost(@Body User user);
     @POST("users/login")
-    Call<User> login(@Body User user);
+    Call<Login> login(@Body RequestBody user);
 
 }
 
